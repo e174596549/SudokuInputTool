@@ -93,7 +93,6 @@ function checkClass() {
         }
     })
 }
-
 var clearBoardValue = function() {
     let boardArr = $('.sudoku-board').find('input')
     for (var i = 0; i < boardArr.length; i++) {
