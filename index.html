@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<link rel="stylesheet" media="all" type="text/css" href="sudokuJS.css">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+		.wrap {
+			padding: 2em 1em;
+			width: 400px;
+			max-width: 100%;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		@media(min-width: 50em) {
+			.wrap {
+				width: 490px;
+			}
+			.sudoku-board input {
+				font-size: 24px;
+				font-size: 1.5rem;
+			}
+			.sudoku-board .candidates {
+				font-size: 0.8em;
+			}
+		}
+		.red {
+			background-color: red;
+		}
+		.blue {
+			background-color: blue;
+		}
+		.green {
+			background-color: green;
+		}
+		.dimgray {
+			background-color: dimgray;
+		}
+		.darkred {
+			background-color: darkred;
+		}
+		.tomato {
+			background-color: tomato;
+		}
+		.yellow {
+			background-color: yellow;
+		}
+		.gray {
+			background-color: gray;
+		}
+		.maroon {
+			background-color: maroon;
+		}
+		.palevioletred {
+			background-color: palevioletred;
+		}
+		.indigo {
+			background-color: indigo;
+		}
+		.saddlebrown {
+			background-color: saddlebrown;
+		}
+		.darkgoldenrod {
+			background-color: darkgoldenrod;
+		}
+		.darkslategray {
+			background-color: darkslategray;
+		}
+		.royalblue {
+			background-color: royalblue;
+		}
+		.wheat {
+			background-color: wheat;
+		}
+		.aquamarine {
+			background-color: aquamarine;
+		}
+		.skyblue {
+			background-color: skyblue;
+		}
+		.blueviolet {
+			background-color: blueviolet;
+		}
+		.thistle {
+			background-color: thistle;
+		}
+		.gainsboro {
+			background-color: gainsboro;
+		}
+		.coral {
+			background-color: coral;
+		}
+		.peru {
+			background-color: peru;
+		}
+		.tan {
+			background-color: tan;
+		}
+		/*.sudoku-board-cell:hover {
+			background-color: blue;
+		}*/
+
+	</style>
+
+	<title>SudokuJS - input tool</title>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="sudokuJS.js"></script>
+</head>
+
+<body>
+	<div class="wrap">
+		<h1>SudokuJS - input tool</h1>
+		<!--the only required html-->
+		<div id="sudoku" class="sudoku-board"></div>
+		<!--create board-->
+		Create:
+		<button type="button" class="js-create-board-4">4</button>
+		<button type="button" class="js-create-board-6">6</button>
+		<button type="button" class="js-create-board-9">9</button>
+		<button type="button" class="js-create-board-5">5</button>
+		<button type="button" class="js-create-board-7">7</button>
+		<button type="button" class="js-create-board-killer">killer</button>
+		<br>
+		<!--solve buttons-->
+		Select:
+		<button type="button" class="js-area-area">area</button>
+		<br>
+		Solve:
+		<button type="button" class="js-solve-step-btn">One Step</button>
+		<button type="button" class="js-solve-all-btn">All</button>
+		<br>
+		<!--clear board btn-->
+		Clear:
+		<button type="button" class="js-clear-board-btn">Board</button>
+		<button type="button" class="js-clear-color-btn">Color</button>
+		<button type="button" class="js-clear-input-btn">Input</button>
+		<button type="button" class="js-clear-All-btn">All</button>
+		<br>
+		<!--save board-->
+		Save:
+		<button type="button" class="js-save-board-btn">Board</button>
+		<br>
+		<!--Input area-->
+		Input:
+		<textarea id='id-input-content' type="text" value="" onkeyup="return noNumbers(event)"></textarea>
+	</div>
+	<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
