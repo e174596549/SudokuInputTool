@@ -44,7 +44,9 @@ var clickClassList = [
 ]
 
 function checkClass() {
-
+    $('.sudoku-board').unbind('mousedown')
+    $('input').unbind('mouseover')
+    $('body').unbind('mouseup')
     $("input").focus(function(e) {
         let inputCell = e.target.parentElement
         //	console.log('inputCell ', e.target)
@@ -81,10 +83,13 @@ function checkClass() {
     $('body').on('mouseup', (event) => {
         //console.log('mouseup event.target', event.target)
         $('input').unbind('mouseover')
-        clickedNumber++
-        //console.log('clickedNumber:', clickedNumber)
-        if (clickedNumber >= clickClassList.length) {
-            clickedNumber = 0
+        console.log(event.target.parentElement);
+        if (event.target.parentElement.classList.contains("sudoku-board-cell")) {
+            clickedNumber++
+            console.log('clickedNumber:', clickedNumber)
+            if (clickedNumber >= clickClassList.length) {
+                clickedNumber = 0
+            }
         }
     })
 }
@@ -164,7 +169,7 @@ $clearColorBtn.on("click", (event) => {
     }
     $("input").unbind('focus')
     $('.sudoku-board').unbind('mousedown')
-    $('.sudoku-board').unbind('mouseup')
+    $('body').unbind('mouseup')
 })
 $clearInputBtn.on('click', (e) => {
     //console.log('clearInputBtn')
