@@ -78,7 +78,7 @@ function checkClass() {
             }
         })
     })
-    $('.sudoku-board').on('mouseup', (event) => {
+    $('body').on('mouseup', (event) => {
         //console.log('mouseup event.target', event.target)
         $('input').unbind('mouseover')
         clickedNumber++
