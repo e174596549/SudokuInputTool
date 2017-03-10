@@ -83,7 +83,7 @@ function checkClass() {
         //单击计后数器+1
         if (cellList.contains('sudoku-board-cell')) {
             clickedNumber++
-            console.log('clickedNumber:', clickedNumber)
+            //console.log('clickedNumber:', clickedNumber)
             //计数器超长后清零
             if (clickedNumber >= clickClassList.length) {
                 clickedNumber = 0
@@ -93,7 +93,7 @@ function checkClass() {
         //划过区域变色实现
         $('input').bind('mouseover', (event) => {
             let cell = event.target.parentElement
-            console.log('mouseover cell', cell)
+            //console.log('mouseover cell', cell)
             //清除之前颜色
             for (let i = 0; i < clickClassList.length; i++) {
                 //console.log('cell.classList', cell.classList)
@@ -365,19 +365,50 @@ $('.js-create-board-killer').on('click', () => {
 $(".js-save-board-btn").on('click', () => {
     //console.log('mySudokuJS', mySudokuJS.getBoard()) console.log('mySudokuJS', mySudokuJS)
     var boardArr = $('.sudoku-board').find('input')
-    var saveArr = []
+    var saveArr = 'num:'
+    var saveClassList = 'area:'
     for (let i = 0; i < boardArr.length; i++) {
         //	console.log(boardArr[i].parentElement.classList)
         if (model == 0) {
-            saveArr.push(Number(boardArr[i].value))
-        } else {
+            if (boardArr[i].value === '') {
+                saveArr += 0
+            } else {
+                saveArr += boardArr[i].value
+            }
+            //saveArr.push(Number(boardArr[i].value))
+        }
+        if (model == 1) {
+            if (boardArr[i].value === '') {
+                saveArr += 0
+            } else {
+                saveArr += boardArr[i].value
+            }
             for (let j = 0; j < clickClassList.length; j++) {
                 if (boardArr[i].parentElement.classList.contains(clickClassList[j])) {
-                    saveArr.push([j, Number(boardArr[i].value)])
+                    //saveArr.push([j, Number(boardArr[i].value)])
+                    saveClassList += j
+                }
+            }
+        }
+        if (model == 2) {
+            if (boardArr[i].value === '') {
+                saveArr = saveArr + ' ' + 0
+            } else {
+                saveArr = saveArr + ' ' + boardArr[i].value
+            }
+            for (let j = 0; j < clickClassList.length; j++) {
+                if (boardArr[i].parentElement.classList.contains(clickClassList[j])) {
+                    //saveArr.push([j, Number(boardArr[i].value)])
+                    saveClassList += j
                 }
             }
         }
     }
+
+    if (model != 0) {
+        saveArr += saveClassList
+    }
+
     console.log(saveArr)
     var fs = require('fs');
 
@@ -390,11 +421,11 @@ $(".js-save-board-btn").on('click', () => {
     })
     //题目
     let num = $number.value
-    console.log('num', $number.value);
+    //console.log('num', $number.value);
     let name = `${space}${mold}${src}${group}${num}`
-    console.log(name);
+    //    console.log(name);
     _saveJSON(`${__dirname}/../../.././data/${name}.num`, saveArr)
-    console.log(__dirname)
+    //    console.log(__dirname)
 })
 //TODO 发送已存信息
 
@@ -428,7 +459,7 @@ const _saveJSON = function(path, answers) {
     // 这个函数用来把一个保存了所有对象的数组保存到文件中
     const fs = require('fs')
     const s = JSON.stringify(answers, null, 2)
-    fs.writeFile(path, s, function(error) {
+    fs.writeFile(path, answers, function(error) {
         if (error !== null) {
             console.log('*** 写入文件错误', error)
             alert('*** 写入文件错误')
