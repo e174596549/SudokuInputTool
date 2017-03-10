@@ -14,6 +14,14 @@ var board7 = [, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 
     undefined
 ]
 //NOTE: if last cell of board is empty 'undefined' has to be used as value!
+//宫数
+var space = 0
+//类型
+var mold = 0
+//来源
+var src = 0
+//组别
+var group = 0
 //模式 0：4、6、9 模式 1：5、7 模式 2：killer
 var model = 0
 //点击次数决定颜色
@@ -70,13 +78,16 @@ function checkClass() {
     //$('.sudoku-board').addClass("hover")  	$(".sudoku-board-cell").attr({readonly: "readonly"})
     //划过区域变色函数
     $('.sudoku-board').on('mousedown', (event) => {
-        let cell = event.target
+        let cellList = event.target.parentElement.classList
+        //console.log('target.classList :', event.target.parentElement.classList);
         //单击计后数器+1
-        clickedNumber++
-        console.log('clickedNumber:', clickedNumber)
-        //计数器超长后清零
-        if (clickedNumber >= clickClassList.length) {
-            clickedNumber = 0
+        if (cellList.contains('sudoku-board-cell')) {
+            clickedNumber++
+            console.log('clickedNumber:', clickedNumber)
+            //计数器超长后清零
+            if (clickedNumber >= clickClassList.length) {
+                clickedNumber = 0
+            }
         }
         //console.log(cell.classList)  console.log('cell.classList', cell.classList)  if (!cell.classList.contains('red') && cell.classList.contains('sudoku-board-cell')) { 	cell.classList.add('red') } console.log('mousedown event.target', event.target)
         //划过区域变色实现
@@ -174,7 +185,40 @@ $clearColorBtn = $(".js-clear-color-btn")
 $clearInputBtn = $('.js-clear-input-btn')
 $clearAllBtn = $('.js-clear-All-btn')
 $areaSelect = $(".js-area-area")
-
+//选择按钮
+$source = $(".source")
+$group = $(".group")
+$number = document.getElementById("id-number")
+$source.on('click', (event) => {
+    let buttons = event.target.parentElement.children
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('border')
+    }
+    console.log(buttons);
+    event.target.classList.add("border")
+    if (event.target.classList.contains('js-source-0-btn')) {
+        src = 0
+    } else {
+        src = 1
+    }
+    console.log(src);
+})
+$group.on('click', (event) => {
+    let buttons = event.target.parentElement.children
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('border')
+    }
+    console.log(buttons);
+    event.target.classList.add("border")
+    if (event.target.classList.contains('js-group-0-btn')) {
+        group = 0
+    } else if (event.target.classList.contains('js-group-1-btn')) {
+        group = 1
+    } else if (event.target.classList.contains('js-group-2-btn')) {
+        group = 2
+    }
+    console.log(group);
+})
 //清除当前所有颜色
 $clearColorBtn.on("click", (event) => {
     //	console.log($('.red .green .black .yellow .blue'))
@@ -210,6 +254,8 @@ $areaSelect.on("click", () => {
 })
 //生成棋盘事件
 $(".js-create-board-4").on("click", () => {
+    space = 4
+    mold = 0
     $clearAllBtn.click()
     $clearBoardBtn.unbind("click")
     model = 0
@@ -225,6 +271,8 @@ $(".js-create-board-4").on("click", () => {
     // showInput()
 })
 $(".js-create-board-6").on("click", () => {
+    space = 6
+    mold = 0
     $clearAllBtn.click()
     $clearBoardBtn.unbind("click")
     model = 0
@@ -244,6 +292,8 @@ $(".js-create-board-6").on("click", () => {
     inputAgain()
 })
 $(".js-create-board-9").on("click", () => {
+    space = 9
+    mold = 0
     $clearAllBtn.click()
     $clearBoardBtn.unbind("click")
     model = 0
@@ -259,6 +309,8 @@ $(".js-create-board-9").on("click", () => {
 })
 $(".js-create-board-5").on("click", () => {
     model = 1
+    space = 5
+    mold = 1
     $clearAllBtn.click()
     $clearBoardBtn.unbind("click")
     $('#sudoku').children().remove()
@@ -275,6 +327,8 @@ $(".js-create-board-5").on("click", () => {
 })
 $(".js-create-board-7").on("click", () => {
     model = 1
+    space = 7
+    mold = 1
     $clearAllBtn.click()
     $clearBoardBtn.unbind("click")
     $('#sudoku').children().remove()
@@ -291,6 +345,8 @@ $(".js-create-board-7").on("click", () => {
 })
 $('.js-create-board-killer').on('click', () => {
     model = 2
+    space = 6
+    mold = 3
     $clearAllBtn.click()
     $clearBoardBtn.unbind("click")
     $('#sudoku').children().remove()
@@ -324,6 +380,7 @@ $(".js-save-board-btn").on('click', () => {
     }
     console.log(saveArr)
     var fs = require('fs');
+
     fs.mkdir(`${__dirname}/../../../data`, 0777, function(err) {
         if (err) {
             console.log(err);
@@ -331,7 +388,12 @@ $(".js-save-board-btn").on('click', () => {
             console.log("creat done!");
         }
     })
-    _saveJSON(`${__dirname}/../../.././data/test.num`, saveArr)
+    //题目
+    let num = $number.value
+    console.log('num', $number.value);
+    let name = `${space}${mold}${src}${group}${num}`
+    console.log(name);
+    _saveJSON(`${__dirname}/../../.././data/${name}.num`, saveArr)
     console.log(__dirname)
 })
 //TODO 发送已存信息
@@ -369,8 +431,10 @@ const _saveJSON = function(path, answers) {
     fs.writeFile(path, s, function(error) {
         if (error !== null) {
             console.log('*** 写入文件错误', error)
+            alert('*** 写入文件错误')
         } else {
             console.log('--- 保存成功')
+            alert('--- 保存成功')
         }
     })
 }

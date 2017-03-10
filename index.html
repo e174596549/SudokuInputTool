@@ -101,10 +101,35 @@
 		}
 		.tan {
 			background-color: tan;
+			margin: 5px;
+		}
+		button {
+			width: 12%;
+			height: 1.8em;
+			border-radius: 3px;
+		}
+		button:hover {
+			background-color: lightgrey;
 		}
 		/*.sudoku-board-cell:hover {
 			background-color: blue;
 		}*/
+		textarea {
+			width: 100%;
+		}
+
+		.long {
+			width: 40%;
+		}
+
+		.mid {
+			width: 20%;
+		}
+		.border {
+			border-color: black;
+			border-style: inset;
+			border-width: 3px;
+		}
 
 	</style>
 
@@ -128,14 +153,16 @@
 		<button type="button" class="js-create-board-7">7</button>
 		<button type="button" class="js-create-board-killer">killer</button>
 		<br>
+		<br>
 		<!--solve buttons-->
 		Select:
 		<button type="button" class="js-area-area">area</button>
 		<br>
-		Solve:
+		<br>
+		<!-- Solve:
 		<button type="button" class="js-solve-step-btn">One Step</button>
 		<button type="button" class="js-solve-all-btn">All</button>
-		<br>
+		<br> -->
 		<!--clear board btn-->
 		Clear:
 		<button type="button" class="js-clear-board-btn">Board</button>
@@ -143,13 +170,32 @@
 		<button type="button" class="js-clear-input-btn">Input</button>
 		<button type="button" class="js-clear-All-btn">All</button>
 		<br>
-		<!--save board-->
-		Save:
-		<button type="button" class="js-save-board-btn">Board</button>
 		<br>
 		<!--Input area-->
 		Input:
+		<br>
 		<textarea id='id-input-content' type="text" value="" onkeyup="return noNumbers(event)"></textarea>
+		<br>
+		<div class="source">
+			Source:
+			<button type="button" class="js-source-0-btn long">全国中小学数独练习题集</button>
+			<button type="button" class="js-source-1-btn long">中小学数独比赛题集</button>
+		</div>
+		<br>
+		<div class="group">
+			Group:
+			<button type="button" class="js-group-0-btn mid">新人组</button>
+			<button type="button" class="js-group-1-btn mid">小学乙组</button>
+			<button type="button" class="js-group-2-btn mid">小学甲组</button>
+		</div>
+		<br>
+		Number：
+		<input type="text" id="id-number" name="" placeholder="三位数字" value="">
+		<br>
+		<br>
+		<!--save board-->
+		Save:
+		<button type="button" class="js-save-board-btn">Board</button>
 	</div>
 	<script type="text/javascript" src="index.js"></script>
 </body>
