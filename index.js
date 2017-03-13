@@ -198,8 +198,14 @@ $source.on('click', (event) => {
     event.target.classList.add("border")
     if (event.target.classList.contains('js-source-0-btn')) {
         src = 0
-    } else {
+    } else if (event.target.classList.contains('js-source-1-btn')) {
         src = 1
+    } else if (event.target.classList.contains('js-source-2-btn')) {
+        src = 2
+    } else if (event.target.classList.contains('js-source-3-btn')) {
+        src = 3
+    } else if (event.target.classList.contains('js-source-4-btn')) {
+        src = 4
     }
     console.log(src);
 })
@@ -216,6 +222,8 @@ $group.on('click', (event) => {
         group = 1
     } else if (event.target.classList.contains('js-group-2-btn')) {
         group = 2
+    } else if (event.target.classList.contains('js-group-3-btn')) {
+        group = 3
     }
     console.log(group);
 })
@@ -361,32 +369,46 @@ $('.js-create-board-killer').on('click', () => {
     $clearAllBtn.click()
     inputAgain()
 })
+$('.js-create-board-diagonal').on('click', (e) => {
+    console.log(e.target.classList);
+    if (e.target.classList.contains('border')) {
+        e.target.classList.remove('border')
+    } else {
+        e.target.classList.add('border')
+    }
+})
+
 //保存信息  以棋盘内容为准
 $(".js-save-board-btn").on('click', () => {
     //console.log('mySudokuJS', mySudokuJS.getBoard()) console.log('mySudokuJS', mySudokuJS)
+    let diagonal = document.querySelector('.js-create-board-diagonal')
+    console.log('对角线', diagonal);
+    if (diagonal.classList.contains('border')) {
+        mold = 2
+    }
     var boardArr = $('.sudoku-board').find('input')
     var saveArr = 'num:'
-    var saveClassList = 'area:'
+    var saveClassList = '\narea:'
     for (let i = 0; i < boardArr.length; i++) {
         //	console.log(boardArr[i].parentElement.classList)
         if (model == 0) {
             if (boardArr[i].value === '') {
-                saveArr += 0
+                saveArr = saveArr + ' ' + 0
             } else {
-                saveArr += boardArr[i].value
+                saveArr = saveArr + ' ' + boardArr[i].value
             }
             //saveArr.push(Number(boardArr[i].value))
         }
         if (model == 1) {
             if (boardArr[i].value === '') {
-                saveArr += 0
+                saveArr = saveArr + ' ' + 0
             } else {
-                saveArr += boardArr[i].value
+                saveArr = saveArr + ' ' + boardArr[i].value
             }
             for (let j = 0; j < clickClassList.length; j++) {
                 if (boardArr[i].parentElement.classList.contains(clickClassList[j])) {
                     //saveArr.push([j, Number(boardArr[i].value)])
-                    saveClassList += j
+                    saveClassList = saveClassList + ' ' + j
                 }
             }
         }
@@ -399,7 +421,7 @@ $(".js-save-board-btn").on('click', () => {
             for (let j = 0; j < clickClassList.length; j++) {
                 if (boardArr[i].parentElement.classList.contains(clickClassList[j])) {
                     //saveArr.push([j, Number(boardArr[i].value)])
-                    saveClassList += j
+                    saveClassList = saveClassList + ' ' + j
                 }
             }
         }
@@ -423,7 +445,7 @@ $(".js-save-board-btn").on('click', () => {
     let num = $number.value
     //console.log('num', $number.value);
     let name = `${space}${mold}${src}${group}${num}`
-    //    console.log(name);
+    console.log(name);
     _saveJSON(`${__dirname}/../../.././data/${name}.num`, saveArr)
     //    console.log(__dirname)
 })
