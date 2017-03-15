@@ -179,6 +179,8 @@ function inputAgain() {
 
     })
 }
+$calculateBtn = $(".js-save-Calculate-btn")
+
 //清除按钮
 $clearBoardBtn = $(".js-clear-board-btn")
 $clearColorBtn = $(".js-clear-color-btn")
@@ -189,6 +191,32 @@ $areaSelect = $(".js-area-area")
 $source = $(".source")
 $group = $(".group")
 $number = document.getElementById("id-number")
+
+$calculateBtn.on('click', () => {
+    console.log('click calculateBtn');
+    const spawn = require('child_process').spawn;
+    console.log('__dirname}', __dirname);
+    const ls = spawn(`./sudoku.check_darwin`, ["4", "0", "0100301203201043"]);
+    //${__dirname}/../../../../../../../../../../Applications/Utilities/Terminal.app`
+
+    ls.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+    });
+
+    ls.stderr.on('data', (data) => {
+        console.log(`stderr: ${data}`);
+        if (data) {
+            alert('题目错误！')
+        } else {
+            alert('题目正确！')
+        }
+    });
+
+    ls.on('close', (code) => {
+        console.log(`child process exited with code ${code}`);
+    });
+})
+
 $source.on('click', (event) => {
     let buttons = event.target.parentElement.children
     for (var i = 0; i < buttons.length; i++) {
