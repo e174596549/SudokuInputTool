@@ -36,23 +36,23 @@ var clickClassList = [
     'maroon',
     'palevioletred',
     'indigo',
-    'saddlebrown',
-    'darkgoldenrod',
-    'darkslategray',
-    'royalblue',
-    'dimgray',
-    'darkred',
-    'tomato',
-    'wheat',
-    'aquamarine',
-    'skyblue',
-    'blueviolet',
-    'thistle',
-    'gainsboro',
-    'coral',
-    'peru',
-    'tan'
+    'saddlebrown'
 ]
+// ['darkgoldenrod',
+// 'darkslategray',
+// 'royalblue',
+// 'dimgray',
+// 'darkred',
+// 'tomato',
+// 'wheat',
+// 'aquamarine',
+// 'skyblue',
+// 'blueviolet',
+// 'thistle',
+// 'gainsboro',
+// 'coral',
+// 'peru',
+// 'tan']
 //区域颜色选择函数
 function checkClass() {
     $('.sudoku-board').unbind('mousedown')
@@ -192,13 +192,14 @@ $source = $(".source")
 $group = $(".group")
 $number = document.getElementById("id-number")
 
-function toCalculate(space, mold, str, name, saveArr) {
+function toCalculate(space, mold, str, name, saveArr, saveClassList) {
     //let str = arr.slice(5).join('').split('0').join('')
-    console.log('toCalculate str:', str);
+    let newStr = saveClassList.split(' ').slice(1).join('')
+    console.log('toCalculate newStr:', newStr);
     //console.log('click calculateBtn');
     const spawn = require('child_process').spawn;
     //console.log('__dirname', __dirname);
-    const ls = spawn(`/${__dirname}/./sudoku.check_darwin`, [`${space}`, `${mold}`, str]);
+    const ls = spawn(`/${__dirname}/./sudoku.check_darwin`, [`${space}`, `${mold}`, str, newStr]);
     //${__dirname}/../../../../../../../../../../Applications/Utilities/Terminal.app`
     let canSave = true
     ls.stdout.on('data', (data) => {
@@ -483,7 +484,7 @@ $(".js-save-board-btn").on('click', () => {
     let name = `${space}${mold}${src}${group}${num}`
     console.log(name);
     var str = document.getElementById("id-input-content").value
-    toCalculate(space, mold, str, name, saveArr)
+    toCalculate(space, mold, str, name, saveArr, saveClassList)
 
     //    console.log(__dirname)
 })
