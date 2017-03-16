@@ -192,13 +192,15 @@ $source = $(".source")
 $group = $(".group")
 $number = document.getElementById("id-number")
 
-$calculateBtn.on('click', () => {
-    console.log('click calculateBtn');
+function toCalculate(space, mold, str, name, saveArr) {
+    //let str = arr.slice(5).join('').split('0').join('')
+    console.log('toCalculate str:', str);
+    //console.log('click calculateBtn');
     const spawn = require('child_process').spawn;
-    console.log('__dirname}', __dirname);
-    const ls = spawn(`./sudoku.check_darwin`, ["4", "0", "0100301203201043"]);
+    //console.log('__dirname', __dirname);
+    const ls = spawn(`/${__dirname}/./sudoku.check_darwin`, [`${space}`, `${mold}`, str]);
     //${__dirname}/../../../../../../../../../../Applications/Utilities/Terminal.app`
-
+    let canSave = true
     ls.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`);
     });
@@ -207,15 +209,21 @@ $calculateBtn.on('click', () => {
         console.log(`stderr: ${data}`);
         if (data) {
             alert('题目错误！')
+            canSave = false
         } else {
             alert('题目正确！')
+
         }
     });
 
     ls.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
+        if (canSave) {
+            _saveJSON(`${__dirname}/../../.././data/${name}.num`, saveArr)
+        }
     });
-})
+}
+
 
 $source.on('click', (event) => {
     let buttons = event.target.parentElement.children
@@ -474,7 +482,9 @@ $(".js-save-board-btn").on('click', () => {
     //console.log('num', $number.value);
     let name = `${space}${mold}${src}${group}${num}`
     console.log(name);
-    _saveJSON(`${__dirname}/../../.././data/${name}.num`, saveArr)
+    var str = document.getElementById("id-input-content").value
+    toCalculate(space, mold, str, name, saveArr)
+
     //    console.log(__dirname)
 })
 //TODO 发送已存信息
