@@ -43,7 +43,7 @@ function creatRandomNum35() {
 function creatQuestion() {
     let question = []
     //提示数个数
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 9; i++) {
         //提示数的位置0-35
         let num = creatRandomNum35()
         if (question[num] === undefined) {
